@@ -1,0 +1,8 @@
+
+*.md
+
+node_modules/*
+
+package-lock.json
+
+config/database.config.js
