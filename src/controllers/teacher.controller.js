@@ -1,5 +1,6 @@
 var Teacher = require('../models/teacher.model.js');
 
+
 exports.create = function(req, res) {
     // Create and Save a new Teacher
     if(!req.body.content) {
@@ -8,9 +9,7 @@ exports.create = function(req, res) {
     var teacher = new Teacher({name: req.body.name || "Unnamed Teacher", surname: req.body.surname});
 
     teacher.save(function(err, data) {
-        console.log(data);
         if(err) {
-            console.log(err);
             return res.status(500).send({message: "Some error occurred while creating the Teacher."});
         } else {
             res.send(data);
