@@ -7,6 +7,17 @@ var bodyParser = require('body-parser');
 // create express app
 var app = express();
 
+app.use(function(req,res,next){
+    var _send = res.send;
+    var sent = false;
+    res.send = function(data){
+        if(sent) return;
+        _send.bind(res)(data);
+        sent = true;
+    };
+    next();
+});
+
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -48,3 +59,5 @@ require('./src/routes/teacher.routes.js')(app);
 app.listen(3000, function(){
     console.log("Server is listening on port 3000");
 });
+
+module.exports = app
