@@ -52,7 +52,9 @@ router.get('/me', function(req, res){
 		if (err)
 			return res.status(500).send({auth: false, message: 'Failed to authenticate accesToken.'})
 		
-		Teacher.findOne(decoded.id, function (err, teacher) {
+		// be careful, this is not the method defined in controller
+		// it is the one provided by mongoose
+		Teacher.findById(decoded.id, function (err, teacher) {
 		  if (err) return res.status(500).send("There was a problem finding the teacher.");
 		  if (!teacher) return res.status(404).send("No teacher found.");
 		  
