@@ -3,7 +3,7 @@ var Teacher = require('../models/teacher.model.js');
 
 exports.create = function(req, res) {
     // Create and Save a new Teacher
-    if(!req.body.content) {
+    if(!req.body) {
         res.status(400).send({message: "Teacher can not be empty"});
     }
     var teacher = new Teacher({name: req.body.name || "Unnamed Teacher", surname: req.body.surname});
