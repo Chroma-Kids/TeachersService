@@ -1,5 +1,9 @@
+//////////////////////////////////////////////////////////////////////
+// Server - configuration or ExpreesJS
+////////////////////// 
 var express = require('express');
 var bodyParser = require('body-parser');
+var OAuthServer = require('express-oauth-server');
 
 //////////////////////////////////////////////////////////////////////
 // General config
@@ -7,6 +11,12 @@ var bodyParser = require('body-parser');
 // create express app
 var app = express();
 
+// adding server authorization 
+app.oauth = new OAuthServer({
+  model: require('./src/models/teacher.model.js'), // See https://github.com/oauthjs/node-oauth2-server for specification 
+});
+
+// to avoid sending headers twice
 app.use(function(req,res,next){
     var _send = res.send;
     var sent = false;
@@ -23,6 +33,12 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
+
+// adding authorization
+app.use(app.oauth.authorize());
+app.use(function(req, res) {
+  res.send('Secret area');
+});
 
 //////////////////////////////////////////////////////////////////////
 // Configuring the database
@@ -46,11 +62,6 @@ mongoose.connection.once('open', function() {
 //////////////////////////////////////////////////////////////////////
 // Routing
 //////////
-// define a simple route
-app.get('/', function(req, res){
-    res.json({"message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes."});
-});
-
 // Require Teachers routes
 require('./src/routes/teacher.routes.js')(app);
 
@@ -59,5 +70,11 @@ require('./src/routes/teacher.routes.js')(app);
 app.listen(3000, function(){
     console.log("Server is listening on port 3000");
 });
+
+/////////////////////////////////////////////////////
+// Auth - Managing Authorization and Authentication 
+/////////////////////////////////////////////////////
+const AuthController = require('./auth/auth.controller');
+app.use('/api/auth', AuthController);
 
 module.exports = app
