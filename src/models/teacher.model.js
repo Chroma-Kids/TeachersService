@@ -4,6 +4,7 @@ var TeacherSchema = mongoose.Schema({
     name: String,
     surname: String,
     password: String,
+    email: String,
     birthday: Date,
     hourstotal: {
     	type: Number

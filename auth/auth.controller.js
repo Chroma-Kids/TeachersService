@@ -26,6 +26,7 @@ router.post('/register', function(req, res) {
 	Teacher.create({
 		name : req.body.name,
 		surname : req.body.surname,
+		email : req.body.email,
 		password : hashedPassword
 	},
 	function (err, teacher) {
@@ -63,6 +64,45 @@ router.get('/me', function(req, res){
 		  res.status(200).send(teacher);
 		});
 	})
+});
+
+
+router.post('/login', function(req, res) {
+
+	Teacher.findOne({ email: req.body.email }, function (err, teacher) {
+		// error checking
+		if (err) 
+			return res.status(500).send('Error on the server.');
+		if (!teacher) 
+			return res.status(404).send('No teacher found.');
+		
+		// compare password hashses 
+		var passwordIsValid = bcrypt.compareSync(req.body.password, teacher.password);
+		
+		if (!passwordIsValid) 
+			return res.status(401).send({ 
+				auth: false, 
+				token: null 
+			});
+		
+		var token = jwt.sign({ 
+			id: teacher._id 
+		}, config.secret, {
+	  		expiresIn: 86400 // expires in 24 hours
+		});
+		res.status(200).send({ 
+			auth: true, 
+			token: token 
+		});
+	});
+});
+
+router.get('/logout', function(req, res) {
+	// reset token and auth 
+	res.status(200).send({ 
+		auth: false, 
+		token: null 
+	});
 });
 
 module.exports = router;
