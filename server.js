@@ -3,18 +3,12 @@
 ////////////////////// 
 var express = require('express');
 var bodyParser = require('body-parser');
-var OAuthServer = require('express-oauth-server');
 
 //////////////////////////////////////////////////////////////////////
 // General config
 //////////////////////
 // create express app
 var app = express();
-
-// adding server authorization 
-app.oauth = new OAuthServer({
-  model: require('./src/models/teacher.model.js'), // See https://github.com/oauthjs/node-oauth2-server for specification 
-});
 
 // to avoid sending headers twice
 app.use(function(req,res,next){
@@ -33,12 +27,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
-
-// adding authorization
-app.use(app.oauth.authorize());
-app.use(function(req, res) {
-  res.send('Secret area');
-});
 
 //////////////////////////////////////////////////////////////////////
 // Configuring the database
