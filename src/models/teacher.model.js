@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var TeacherSchema = mongoose.Schema({
     name: String,
     surname: String,
+    password: String,
     birthday: Date,
     hourstotal: {
     	type: Number
