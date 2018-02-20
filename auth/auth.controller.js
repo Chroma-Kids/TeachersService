@@ -17,6 +17,8 @@ const Teacher = require('../src/models/teacher.model');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var config = require('../config/config');
+var VerifyToken = require('./verify.controller');
+
 
 router.post('/register', function(req, res) {
 	// encrypt password
@@ -45,25 +47,19 @@ router.post('/register', function(req, res) {
 	}); 
 })
 
-router.get('/me', function(req, res){
-	const accesToken = req.headers['x-access-token'];
-	if(!accesToken)
-		return res.status(401).send({auth: false, message: 'No accesToken provided.'});
-	jwt.verify(accesToken, config.secret, function(err, decoded){
-		if (err)
-			return res.status(500).send({auth: false, message: 'Failed to authenticate accesToken.'})
-		
-		// be careful, this is not the method defined in controller
-		// it is the one provided by mongoose
-		Teacher.findById(decoded.id, 
-			{ password: 0 }, // projection
-			function (err, teacher) {
-		  if (err) return res.status(500).send("There was a problem finding the teacher.");
-		  if (!teacher) return res.status(404).send("No teacher found.");
-		  
+router.get('/me', VerifyToken, function(req, res, next){
+	// be careful, this is not the method defined in controller
+	// it is the one provided by mongoose
+	Teacher.findById(req.teacherId, 
+		{ password: 0 }, // projection
+		function (err, teacher) {
+			if (err) 
+			  	return res.status(500).send("There was a problem finding the teacher.");
+			if (!teacher) 
+				return res.status(404).send("No teacher found.");
+
 		  res.status(200).send(teacher);
-		});
-	})
+	});
 });
 
 
