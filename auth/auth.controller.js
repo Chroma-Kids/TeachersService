@@ -54,7 +54,9 @@ router.get('/me', function(req, res){
 		
 		// be careful, this is not the method defined in controller
 		// it is the one provided by mongoose
-		Teacher.findById(decoded.id, function (err, teacher) {
+		Teacher.findById(decoded.id, 
+			{ password: 0 }, // projection
+			function (err, teacher) {
 		  if (err) return res.status(500).send("There was a problem finding the teacher.");
 		  if (!teacher) return res.status(404).send("No teacher found.");
 		  
