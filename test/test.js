@@ -88,6 +88,20 @@ describe('API endpoint /teachers', function() {
         expect(res.body.surname).to.equal('Suarez');
         _id = res.body._id 
       });
+  }); 
+  // GET - The new created teacher
+  it('should return the created teacher', function() {
+    return chai.request(app)
+      .get('/teachers/'+_id)
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        expect(res).to.be.json;
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('name');
+        expect(res.body).to.have.property('surname');
+        expect(res.body.name).to.equal('Angel');
+        expect(res.body.surname).to.equal('Suarez');
+      });
   });
 
   // DELETE - Delete a teacher

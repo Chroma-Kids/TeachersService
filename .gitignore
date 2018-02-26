@@ -5,6 +5,5 @@ node_modules/*
 
 package-lock.json
 
-config/database.config.js
+config/*
 
-config/config.js

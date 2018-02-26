@@ -1,6 +1,6 @@
 # Teachers Microservice
 
-CRUD for teachers
+CRUD teachers + JWT auth + Chai 
 
 <!--## Getting Started
 
@@ -59,7 +59,8 @@ Add additional notes about how to deploy this on a live system -->
 ## Built With
 
 * [ExpressJS](http://www.dropwizard.io/1.0.2/docs/) - Framework for NodeJS
-* [Chai](http://chaijs.com/) - Chai Assertion Library
+* [JWT](https://jwt.io/) - JSON Web Tokens
+* [Chai](http://chaijs.com/api/) - Chai Assertion Library
 
 <!-- ## Contributing
 

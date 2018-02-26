@@ -1,3 +1,6 @@
+//////////////////////////////////////////////////////////////////////
+// Server - configuration or ExpreesJS
+////////////////////// 
 var express = require('express');
 var bodyParser = require('body-parser');
 
@@ -7,6 +10,7 @@ var bodyParser = require('body-parser');
 // create express app
 var app = express();
 
+// to avoid sending headers twice
 app.use(function(req,res,next){
     var _send = res.send;
     var sent = false;
@@ -46,11 +50,6 @@ mongoose.connection.once('open', function() {
 //////////////////////////////////////////////////////////////////////
 // Routing
 //////////
-// define a simple route
-app.get('/', function(req, res){
-    res.json({"message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes."});
-});
-
 // Require Teachers routes
 require('./src/routes/teacher.routes.js')(app);
 
@@ -59,5 +58,11 @@ require('./src/routes/teacher.routes.js')(app);
 app.listen(3000, function(){
     console.log("Server is listening on port 3000");
 });
+
+/////////////////////////////////////////////////////
+// Auth - Managing Authorization and Authentication 
+/////////////////////////////////////////////////////
+const AuthController = require('./auth/auth.controller');
+app.use('/api/auth', AuthController);
 
 module.exports = app
