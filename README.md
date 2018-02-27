@@ -1,12 +1,9 @@
 # Teachers Microservice
 
-CRUD teachers + JWT auth + Chai 
+CRUD teachers + JWT auth + Chai + Docker
 
-<!--## Getting Started
-
-ExpressJS + Mocha/Chai test
-
- ### Prerequisites
+<!--
+### Prerequisites
 
 What things you need to install the software and how to install them
 
@@ -14,24 +11,23 @@ What things you need to install the software and how to install them
 Give examples
 ```
 
+-->
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
+To run
 
 ```
-Give the example
+docker-compose up -d
 ```
 
-And repeat
+To stop
 
 ```
-until finished
+docker-compose stop
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
 
+<!--
 ## Running the tests
 
 Explain how to run the automated tests for this system
@@ -61,6 +57,7 @@ Add additional notes about how to deploy this on a live system -->
 * [ExpressJS](http://www.dropwizard.io/1.0.2/docs/) - Framework for NodeJS
 * [JWT](https://jwt.io/) - JSON Web Tokens
 * [Chai](http://chaijs.com/api/) - Chai Assertion Library
+* [Docker](https://www.docker.com/) - Software for containerization
 
 <!-- ## Contributing
 

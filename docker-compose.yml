@@ -1,0 +1,15 @@
+version: "2"
+services:
+  teacher-service:
+    container_name: teacher-service
+    restart: always
+    build: .
+    ports:
+      - ${TEACHERS_SERVICE_PORT}:${TEACHERS_SERVICE_PORT}
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - ${TEACHERS_DB_PORT}
