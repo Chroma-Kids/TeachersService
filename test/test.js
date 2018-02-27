@@ -12,6 +12,18 @@ chai.use(require('chai-http'));
 const deleteAfterRun = false;
 let _id = null;
 
+let login_details = {
+  'email_or_username': 'email@email.com',
+  'password': '123@abc'
+}
+ 
+let register_details = {
+  'fullName': 'Rexford',
+  'email': 'email@email.com',
+  'username': 'username',
+  'password': '123@abc'
+};
+
 //////////////////////////////////////////////
 // Describing API endpoint tests for /teachers
 //////////////////////////////////////////////
@@ -34,7 +46,7 @@ describe('API endpoint /teachers', function() {
     mongoose.connection.once('open', function() {
         console.log("Successfully connected to the database");
         done();
-    })
+    });
   });
  
   after(function(done) {
@@ -46,6 +58,18 @@ describe('API endpoint /teachers', function() {
         done();
     }
   });
+
+
+ 
+  // POST Register, Login, Check Token
+  it('it should Register, Login, and check token', function() {
+    return chai.request(app)
+      .post('/api/auth/login')
+      .send(register_details)
+      .end((err, res) => {
+          res.should.have.status(201);
+      });
+  }); 
  
   // GET - List all teachers
   it('should return all teachers', function() {
