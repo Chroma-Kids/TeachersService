@@ -1,4 +1,4 @@
-# Teachers Microservice [![Build Status](https://travis-ci.org/Chroma-Kids/TeachersService.svg?branch=master)](https://travis-ci.org/Chroma-Kids/TeachersService)
+# Teachers Service [![Build Status](https://travis-ci.org/Chroma-Kids/TeachersService.svg?branch=master)](https://travis-ci.org/Chroma-Kids/TeachersService)
 
 CRUD teachers + JWT auth + Chai + Docker
 
